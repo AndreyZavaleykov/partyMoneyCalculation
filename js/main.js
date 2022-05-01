@@ -8,5 +8,10 @@ document.forms.publish.onsubmit = function () {
     };
     PRODUCTS.push(product);
     console.table(PRODUCTS);
+    document.querySelector("table").innerHTML += `   <tr>
+    <td>${product.name}</td>
+    <td>${product.amount}</td>
+    <td>${product.price}</td>
+   </tr>`;
     return false;
 };
