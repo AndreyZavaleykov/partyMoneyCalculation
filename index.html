@@ -10,26 +10,19 @@
         <div>
             <form name="publish">
                 <input type="text" name="product" placeholder="Наименование товара" />
-                <input type="number" name="amount" value="1" />Кол-во<input
-                    type="number"
-                    name="price"
-                    placeholder="Стоимость товара"
-                />₽
+                <!-- <input type="number" name="amount" value="1" />Кол-во -->
+                <input type="number" name="price" placeholder="Стоимость товара" />₽
                 <input type="submit" value="Сохранить" />
             </form>
+            <div>
+                <form name="people">
+                    <input type="text" name="people" placeholder="Имя" />
+                    <input type="submit" value="Сохранить" />
+                </form>
+            </div>
         </div>
-        <table border="1">
-            <caption>
-                Список продуктов
-            </caption>
-            <tr>
-                <th>Продукт</th>
-                <th>Количество</th>
-                <th>Стоимость</th>
-            </tr>
-        </table>
-        <div class="outProduct"></div>
 
+        <table border="1"></table>
         <script src="js/main.js"></script>
     </body>
 </html>
