@@ -21,11 +21,11 @@ document.forms.people.onsubmit = function () {
 function renderTable(PRODUCTS, PEOPLES) {
     if (PRODUCTS.length >= 2 && PEOPLES.length >= 2) {
         PEOPLES.forEach((people, indexPeople) =>
-            PRODUCTS.forEach((product, indexProduct) => {
+            PRODUCTS.forEach(product => {
                 let checkboxe = document.querySelector(`.${people.name}_${product.name}:checked`) !== null;
-                console.log(checkboxe);
-                console.log(PEOPLES);
-                checkboxe ? PEOPLES[indexPeople].products: '';
+                // console.log(checkboxe);
+                // console.log(PEOPLES);
+                checkboxe ? PEOPLES[indexPeople].products.push(product) : '';
             })
         );
     }
@@ -34,7 +34,7 @@ function renderTable(PRODUCTS, PEOPLES) {
     </caption>
     <th>Продукт/Имя</th>
     <tfoot><th>Итого</th></tfoot>`;
-    console.table(PEOPLES, PRODUCTS);
+    // console.table(PEOPLES, PRODUCTS);
     PRODUCTS.forEach(product => {
         document.querySelector('body > table > tbody:nth-child(2) > tr').innerHTML += ` 
         <th>${product.name}</th>`;
@@ -46,17 +46,25 @@ function renderTable(PRODUCTS, PEOPLES) {
         <tr class="${people.name}"> 
         <td>${people.name}</td>
         </tr>`;
-        PRODUCTS.forEach(
-            element =>
-                (document.querySelector(`body > table > tbody > .${people.name}`).innerHTML += ` 
-                <td> <input type="checkbox" class="${people.name}_${element.name}"></td>`)
-        );
+        PRODUCTS.forEach(element => {
+            if (people.products.find(item => (element.name = item.name == element.name))) {
+                document.querySelector(`body > table > tbody > .${people.name}`).innerHTML += ` 
+                <td> <input type="checkbox" class="${people.name}_${element.name}"checked></td>`;
+            } else {
+                document.querySelector(`body > table > tbody > .${people.name}`).innerHTML += `
+                <td> <input type="checkbox" class="${people.name}_${element.name}"></td>`;
+            }
+        });
     });
     document.querySelector('body > table > tbody:nth-child(2) > tr').innerHTML += ` 
     <th>Итого</th>`;
-    PEOPLES.map(
-        people =>
-            (document.querySelector(`.${people.name}`).innerHTML += ` 
-            <td>Сумма для ${people.name}</td>`)
-    );
+    PEOPLES.map(people => {
+        let summ = 0;
+        if (people.products.length > 0) {
+            summ = people.products.map(item => (summ += +item.price));
+        }
+        document.querySelector(`.${people.name}`).innerHTML += ` 
+            <td>Сумма для ${people.name} : ${summ}</td>`;
+            summ=0;
+    });
 }
